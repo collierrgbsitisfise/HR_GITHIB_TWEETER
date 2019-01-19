@@ -1,4 +1,1 @@
-;(() => {
-    const a: {[index: string]: any} = {}
-    console.log(a)
-})()
+console.log('app is workinng');
