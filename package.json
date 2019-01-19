@@ -1,0 +1,19 @@
+{
+  "name": "hr_github_tweeter",
+  "version": "1.0.0",
+  "description": "autotweet solution(challanges from hackerrank)",
+  "main": "git status",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/collierrgbsitisfise/HR_GITHIB_TWEETER.git"
+  },
+  "author": "Vadim Nicolaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/collierrgbsitisfise/HR_GITHIB_TWEETER/issues"
+  },
+  "homepage": "https://github.com/collierrgbsitisfise/HR_GITHIB_TWEETER#readme"
+}
