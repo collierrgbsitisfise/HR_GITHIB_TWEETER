@@ -1,7 +1,7 @@
 import * as rp from 'request-promise';
 import { RepoInfo, CommitInfo, CommitInfoFull } from './../types/';
 
-type optionsForGhAPI = {
+type OptionsForGhAPI = {
     uri: string;
     headers: {
         'User-Agent': string;
@@ -16,7 +16,7 @@ export class GitHubService {
     private userName: string;
     private repoName: string;
 
-    private getOptions(uri: string, UA: string): optionsForGhAPI {
+    private getOptions(uri: string, UA: string): OptionsForGhAPI {
         return { uri: uri, headers: { 'User-Agent': UA }, json: true };
     }
 
