@@ -2,7 +2,7 @@
 
 ![Alt text](docs/HR_GITHUB_TWEETER.png?raw=true 'Title')
 
-You can also:
+How it's work:
 
 -   Get info about last commits (using GitHub API)
 -   Get lates sha(commits) posted as solution to Tweeter from REDIS store
