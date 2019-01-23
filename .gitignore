@@ -4,5 +4,5 @@ node_modules/
 #compiled javascript
 dist/
 
-#env - generet after $ENV={envname} npm run setup command
+#env - generted after $ENV={envname} npm run setup command
 .env
