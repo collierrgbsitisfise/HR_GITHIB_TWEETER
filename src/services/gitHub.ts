@@ -1,5 +1,5 @@
 import * as rp from 'request-promise';
-import { RepoInfo, CommitInfo } from './../types/';
+import { RepoInfo, CommitInfo, CommitInfoFull } from './../types/';
 
 type optionsForGhAPI = {
     uri: string;
@@ -10,6 +10,8 @@ type optionsForGhAPI = {
 };
 
 export class GitHubService {
+    private static userAgen = 'https://api.github.com/meta';
+
     private ghAPI = 'https://api.github.com/';
     private userName: string;
     private repoName: string;
@@ -32,12 +34,24 @@ export class GitHubService {
         return <RepoInfo>await rp.get(options);
     }
 
-    async getCommitInfo(commitSHA: string): Promise<CommitInfo> {
+    /**
+     * Will return only 30 last commits
+     */
+    async getCommits(): Promise<CommitInfo[]> {
         const options = this.getOptions(
-            `${this.ghAPI}repos/${this.userName}/${this.repoName}/commits/${commitSHA}`,
-            'https://api.github.com/meta',
+            `${this.ghAPI}repos/${this.userName}/${this.repoName}/commits`,
+            GitHubService.userAgen,
         );
 
-        return <CommitInfo>await rp.get(options);
+        return <CommitInfo[]>await rp.get(options);
+    }
+
+    async getCommitInfo(commitSHA: string): Promise<CommitInfoFull> {
+        const options = this.getOptions(
+            `${this.ghAPI}repos/${this.userName}/${this.repoName}/commits/${commitSHA}`,
+            GitHubService.userAgen,
+        );
+
+        return <CommitInfoFull>await rp.get(options);
     }
 }

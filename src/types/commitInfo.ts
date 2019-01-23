@@ -99,7 +99,7 @@ export interface File {
     patch: string;
 }
 
-export interface CommitInfo {
+export interface CommitInfoFull {
     sha: string;
     node_id: string;
     commit: Commit;
@@ -111,4 +111,16 @@ export interface CommitInfo {
     parents: Parent[];
     stats: Stats;
     files: File[];
+}
+
+export interface CommitInfo {
+    url: string;
+    sha: string;
+    node_id: string;
+    html_url: string;
+    comments_url: string;
+    commit: Commit;
+    author: Author;
+    committer: Committer;
+    parents: Parent[];
 }
