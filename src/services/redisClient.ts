@@ -1,11 +1,13 @@
 import * as redis from 'redis';
 import { RedisClient as RedisClientType } from 'redis';
 import * as bluebird from 'bluebird';
+
+import { CommitInfoFull } from './../types';
 bluebird.promisifyAll(redis);
 
 export class RedisClient {
     private host: string;
-    private redisClient: RedisClientType;
+    private redisClient: RedisClientType & { getAsync: Function };
 
     private stringifyNonStringValues(value: any): string {
         if (typeof value !== 'string') {
@@ -20,13 +22,13 @@ export class RedisClient {
     }
 
     public connect(): void {
-        this.redisClient = redis.createClient(this.host);
+        this.redisClient = <RedisClientType & { getAsync: Function }>redis.createClient(this.host);
     }
 
     /**
      * Always stringyfy value, before save it redis
      */
-    public setValue(key: string, value: string): void {
+    public setValue(key: string, value: any): void {
         this.redisClient.set(key, this.stringifyNonStringValues(value));
     }
 
@@ -34,7 +36,16 @@ export class RedisClient {
         this.redisClient.set(key, this.stringifyNonStringValues(value), 'EX', seconds);
     }
 
-    public getValue(key: string): Promise<any> {
-        return this.getValue(key);
+    public deleteValueByKey(key: string) {
+        this.redisClient.del(key);
+    }
+
+    public async getValue(key: string): Promise<string> {
+        return this.redisClient.getAsync(key);
+    }
+
+    saveLastPostedCommit(commitInfo: CommitInfoFull): void {
+        const commitSHA = commitInfo.sha;
+        this.setValue(commitSHA, commitInfo);
     }
 }

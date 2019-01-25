@@ -7,6 +7,7 @@ type OptionsForGhAPI = {
         'User-Agent': string;
     };
     json: boolean;
+    qs?: { [key: string]: string };
 };
 
 export class GitHubService {
@@ -15,14 +16,22 @@ export class GitHubService {
     private ghAPI = 'https://api.github.com/';
     private userName: string;
     private repoName: string;
+    private accesstoken: string;
 
     private getOptions(uri: string, UA: string): OptionsForGhAPI {
-        return { uri: uri, headers: { 'User-Agent': UA }, json: true };
+        const basicOptions = { uri: uri, headers: { 'User-Agent': UA }, json: true };
+
+        // accessToken  options- ability to receive up to 5k request per hour
+        // @see https://developer.github.com/v3/#basic-authentication
+        const acOption = { access_token: this.accesstoken };
+
+        return { ...basicOptions, ...(this.accesstoken ? { qs: acOption } : {}) };
     }
 
-    constructor(userName: string, repoName: string) {
+    constructor(userName: string, repoName: string, accesstoken?: string) {
         this.userName = userName;
         this.repoName = repoName;
+        this.accesstoken = accesstoken;
     }
 
     async getRepoInfo(): Promise<RepoInfo> {
